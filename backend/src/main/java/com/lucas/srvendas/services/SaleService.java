@@ -1,9 +1,10 @@
 package com.lucas.srvendas.services;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lucas.srvendas.dto.SaleDTO;
@@ -16,9 +17,9 @@ public class SaleService {
 	@Autowired
 	private SaleRepository saleRepository;
 	
-	public List<SaleDTO> findAll() {
-		List<Sale> result = saleRepository.findAll();
-		return result.stream().map(x -> new SaleDTO(x)).collect(Collectors.toList());
+	public Page<SaleDTO> findAll(Pageable pageable) {
+		Page<Sale> result = saleRepository.findAll(pageable);
+		return result.map(x -> new SaleDTO(x));
 	}
 
 }
